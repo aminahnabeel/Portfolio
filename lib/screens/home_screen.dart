@@ -6,7 +6,7 @@ import '../constants/app_data.dart';
 import '../sections/navbar_section.dart';
 import '../sections/hero_section.dart';
 import '../sections/about_section.dart';
-import '../sections/services_section.dart';
+import '../sections/tech_stack_section.dart';
 import '../sections/projects_section.dart';
 import '../sections/experience_section.dart';
 import '../sections/testimonials_section.dart';
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen>
                 SizedBox(height: 80), // Space reserved for floating navbar
                 HeroSection(),
                 AboutSection(),
-                ServicesSection(),
+                TechStackSection(),
                 ProjectsSection(),
                 ExperienceSection(),
                 TestimonialsSection(),
