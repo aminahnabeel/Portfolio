@@ -55,35 +55,47 @@ class AppData {
   static final List<ProjectModel> projects = [
     ProjectModel(
       title: 'SkillSwap',
+      tagline: 'AI-powered peer-to-peer skill exchange platform',
       description:
-          'AI-powered skill exchange platform. Connect, learn, and grow '
-          'through peer-to-peer skill sharing with smart matching.',
-      tags: ['Flutter', 'Firebase', 'AI'],
+          'A smart platform that connects learners and teachers through '
+          'AI-based matching. Users exchange skills, track progress, and '
+          'grow together — no money involved, just knowledge.',
+      tags: ['Flutter', 'Firebase', 'AI / ML', 'REST APIs'],
       gradientColors: const [Color(0xFF9747FF), Color(0xFF6B35CF)],
+      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
     ),
     ProjectModel(
       title: 'Traffic Sign Recognition',
+      tagline: 'CNN model for real-time traffic sign detection',
       description:
-          'CNN-based traffic sign detection and classification system '
-          'built with TensorFlow achieving 97 % accuracy.',
-      tags: ['Python', 'TensorFlow', 'CNN'],
+          'A deep-learning system that detects and classifies traffic signs '
+          'from images with 97 % accuracy. Trained on a large dataset using '
+          'TensorFlow and optimized for edge deployment.',
+      tags: ['Python', 'TensorFlow', 'CNN', 'AI / ML'],
       gradientColors: const [Color(0xFFFE814C), Color(0xFFFF5733)],
+      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
     ),
     ProjectModel(
-      title: 'Docker Ecommerce Platform',
+      title: 'Docker Ecommerce',
+      tagline: 'Fully containerized scalable ecommerce solution',
       description:
-          'Scalable ecommerce solution fully containerized with Docker '
-          'and orchestrated with Docker Compose.',
-      tags: ['Docker', 'Node.js', 'MongoDB'],
+          'A production-ready ecommerce backend containerized with Docker '
+          'and orchestrated via Docker Compose, featuring cart, auth, and '
+          'product microservices communicating over REST.',
+      tags: ['Docker', 'Node.js', 'MongoDB', 'REST APIs'],
       gradientColors: const [Color(0xFF4776E6), Color(0xFF8E54E9)],
+      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
     ),
     ProjectModel(
       title: 'ConnecFriend',
+      tagline: 'Social app connecting people with shared interests',
       description:
-          'Social networking platform connecting people with shared '
-          'interests and real-time messaging.',
-      tags: ['Flutter', 'Firebase', 'Social'],
+          'A Flutter-based social networking app with real-time messaging, '
+          'interest-based matching, and a Firebase backend. Built for '
+          'meaningful connections beyond location.',
+      tags: ['Flutter', 'Firebase', 'UI / UX'],
       gradientColors: const [Color(0xFF11998E), Color(0xFF38EF7D)],
+      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
     ),
   ];
 
