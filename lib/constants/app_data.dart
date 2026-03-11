@@ -120,6 +120,42 @@ class AppData {
     },
   ];
 
+  // ── Awards & certificates ──────────────────────────────────────────────────
+  static const List<Map<String, String>> certificates = [
+    {
+      'title': 'BU Merit Scholarships',
+      'issuer': 'Bahria University Islamabad',
+      'year': '2023 - 2025',
+      'type': 'Award',
+      'summary': 'Awarded for academic excellence, securing multiple merit scholarships.',
+      'icon': 'award',
+    },
+    {
+      'title': 'Freelancing Training Certificate',
+      'issuer': 'Digiskills',
+      'year': '',
+      'type': 'Certificate',
+      'summary': 'Freelancing training certificate awarded by Digiskills.',
+      'icon': 'award',
+    },
+    {
+      'title': 'WordPress Training Certificate',
+      'issuer': 'Digiskills',
+      'year': '',
+      'type': 'Certificate',
+      'summary': 'WordPress training certificate awarded by Digiskills.',
+      'icon': 'award',
+    },
+    {
+      'title': 'Introduction to Generative AI',
+      'issuer': 'Coursera',
+      'year': '',
+      'type': 'Certificate',
+      'summary': 'Introduction to Generative AI certificate from Coursera.',
+      'icon': 'award',
+    },
+  ];
+
   // ── Testimonials ─────────────────────────────────────────────────────────────
   static const List<Map<String, String>> testimonials = [
     {
