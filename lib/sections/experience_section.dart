@@ -4,9 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_data.dart';
 import '../widgets/section_title.dart';
-import '../widgets/glass_card.dart';
 
-/// Work experience presented as a vertical timeline.
+/// Work experience presented as a modern vertical timeline — blends with bg.
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
 
@@ -16,21 +15,20 @@ class ExperienceSection extends StatelessWidget {
     final isDesktop = w >= 1024;
     final hPad = isDesktop ? 80.0 : 24.0;
 
-    return Container(
-      color: const Color(0xFF050505),
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: hPad, vertical: 80),
       child: Column(
         children: [
           SectionTitle(
             title: 'Experience',
             subtitle:
-                'Real-world internships that shaped my skills and professional mindset.',
+                'Real-world internships that shaped my skills and '
+                'professional mindset.',
           ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2),
-          const SizedBox(height: 60),
+          const SizedBox(height: 64),
 
-          // Timeline
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 780),
+            constraints: const BoxConstraints(maxWidth: 820),
             child: Column(
               children: List.generate(AppData.experience.length, (i) {
                 return _TimelineItem(
@@ -48,7 +46,7 @@ class ExperienceSection extends StatelessWidget {
 }
 
 // ── Single timeline row ───────────────────────────────────────────────────────
-class _TimelineItem extends StatelessWidget {
+class _TimelineItem extends StatefulWidget {
   final Map<String, String> data;
   final bool isLast;
   final int index;
@@ -60,102 +58,238 @@ class _TimelineItem extends StatelessWidget {
   });
 
   @override
+  State<_TimelineItem> createState() => _TimelineItemState();
+}
+
+class _TimelineItemState extends State<_TimelineItem> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
+    final number = (widget.index + 1).toString().padLeft(2, '0');
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Timeline spine ─────────────────────────────────────────────
+          // ── Timeline spine ────────────────────────────────────────────
           SizedBox(
-            width: 48,
+            width: 56,
             child: Column(
               children: [
-                // Dot
-                Container(
-                  width: 18,
-                  height: 18,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: AppColors.accentGradient,
-                  ),
+                // Pulsing glow halo + inner gradient dot
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            AppColors.purple.withOpacity(0.35),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                    )
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .scaleXY(
+                          begin: 0.7,
+                          end: 1.3,
+                          duration: 2200.ms,
+                          curve: Curves.easeInOut,
+                        )
+                        .fade(begin: 0.3, end: 0.9, duration: 2200.ms),
+                    Container(
+                      width: 15,
+                      height: 15,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: AppColors.accentGradient,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xBB9747FF),
+                            blurRadius: 16,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                // Vertical line
-                if (!isLast)
+                // Gradient connector line fading to transparent
+                if (!widget.isLast)
                   Expanded(
                     child: Container(
                       width: 2,
-                      color: AppColors.glassBorder,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [AppColors.purple, Color(0x009747FF)],
+                        ),
+                      ),
                     ),
                   ),
               ],
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 20),
 
-          // ── Card ───────────────────────────────────────────────────────
+          // ── Card ─────────────────────────────────────────────────────
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : 32),
-              child: GlassCard(
-                padding: const EdgeInsets.all(28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Duration badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        gradient: AppColors.horizontalGradient,
-                      ),
-                      child: Text(
-                        data['duration'] ?? '',
-                        style: GoogleFonts.kanit(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+              padding: EdgeInsets.only(bottom: widget.isLast ? 0 : 44),
+              child: MouseRegion(
+                onEnter: (_) => setState(() => _hovered = true),
+                onExit: (_) => setState(() => _hovered = false),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                  transform: Matrix4.translationValues(0, _hovered ? -4 : 0, 0),
+                  transformAlignment: Alignment.center,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Left gradient accent bar
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: 3,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            gradient: _hovered
+                                ? AppColors.accentGradient
+                                : LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      AppColors.purple.withOpacity(0.4),
+                                      AppColors.orange.withOpacity(0.2),
+                                    ],
+                                  ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 14),
+                        const SizedBox(width: 20),
+                        // Card content
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Top row: number + duration badge
+                                Row(
+                                  children: [
+                                    ShaderMask(
+                                      shaderCallback: (b) =>
+                                          AppColors.accentGradient
+                                              .createShader(b),
+                                      child: Text(
+                                        number,
+                                        style: GoogleFonts.kanit(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          letterSpacing: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 14, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        gradient:
+                                            AppColors.horizontalGradient,
+                                      ),
+                                      child: Text(
+                                        widget.data['duration'] ?? '',
+                                        style: GoogleFonts.kanit(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
 
-                    // Role
-                    Text(
-                      data['role'] ?? '',
-                      style: GoogleFonts.kanit(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
+                                // Role
+                                Text(
+                                  widget.data['role'] ?? '',
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: _hovered
+                                        ? Colors.white
+                                        : AppColors.textPrimary,
+                                    height: 1.2,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
 
-                    // Company
-                    Text(
-                      data['company'] ?? '',
-                      style: GoogleFonts.kanit(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
+                                // Company with icon
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.business_rounded,
+                                      color: AppColors.orange,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      widget.data['company'] ?? '',
+                                      style: GoogleFonts.kanit(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.orange,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
 
-                    // Description
-                    Text(
-                      data['description'] ?? '',
-                      style: GoogleFonts.kanit(
-                        fontSize: 14,
-                        color: AppColors.textSecondary,
-                        height: 1.7,
-                      ),
+                                // Gradient fade divider
+                                Container(
+                                  height: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColors.glassBorder,
+                                        Colors.transparent,
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+
+                                // Description
+                                Text(
+                                  widget.data['description'] ?? '',
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 14,
+                                    color: AppColors.textSecondary,
+                                    height: 1.75,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               )
                   .animate()
-                  .fadeIn(delay: (index * 200).ms, duration: 600.ms)
+                  .fadeIn(delay: (widget.index * 200).ms, duration: 600.ms)
                   .slideX(begin: 0.15, curve: Curves.easeOut),
             ),
           ),

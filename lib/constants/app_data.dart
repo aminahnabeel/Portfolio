@@ -57,23 +57,23 @@ class AppData {
       title: 'SkillSwap',
       tagline: 'AI-powered peer-to-peer skill exchange platform',
       description:
-          'A smart platform that connects learners and teachers through '
+          'A smart platform that that lets users learn, teach, and collaborate freely. '
           'AI-based matching. Users exchange skills, track progress, and '
           'grow together — no money involved, just knowledge.',
-      tags: ['Flutter', 'Firebase', 'AI / ML', 'REST APIs'],
+      tags: ['Flutter', 'Firebase', 'AI / ML'],
       gradientColors: const [Color(0xFF9747FF), Color(0xFF6B35CF)],
-      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
+      linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7421854717712125953/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'Traffic Sign Recognition',
       tagline: 'CNN model for real-time traffic sign detection',
       description:
           'A deep-learning system that detects and classifies traffic signs '
-          'from images with 97 % accuracy. Trained on a large dataset using '
+          'from images with 95 % accuracy. Trained on a large dataset using '
           'TensorFlow and optimized for edge deployment.',
-      tags: ['Python', 'TensorFlow', 'CNN', 'AI / ML'],
+      tags: ['Python', 'TensorFlow', 'CNN', 'Keras'],
       gradientColors: const [Color(0xFFFE814C), Color(0xFFFF5733)],
-      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
+      linkedinUrl: 'https://www.linkedin.com/posts/aminah-nabeel-249b36221_machinelearning-deeplearning-python-ugcPost-7351923521767321602-kV4Y?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'Docker Ecommerce',
@@ -82,9 +82,9 @@ class AppData {
           'A production-ready ecommerce backend containerized with Docker '
           'and orchestrated via Docker Compose, featuring cart, auth, and '
           'product microservices communicating over REST.',
-      tags: ['Docker', 'Node.js', 'MongoDB', 'REST APIs'],
+      tags: ['Docker', 'Node.js', 'HTML', 'CSS'],
       gradientColors: const [Color(0xFF4776E6), Color(0xFF8E54E9)],
-      linkedinUrl: 'https://www.linkedin.com/in/aminah-arshad-/',
+      linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7437172163872448512/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'ConnecFriend',
@@ -104,15 +104,16 @@ class AppData {
     {
       'role':        'Mobile App Development Intern',
       'company':     'Esols Technologies',
-      'duration':    'Summer 2024',
+      'duration':    '07/2025 – 08/2025',
+
       'description': 'Developed multiple Flutter applications with clean '
           'architecture, Firebase integration, and responsive UI design for '
           'real-world clients.',
     },
     {
-      'role':        'Web Development & Research Intern',
+      'role':        'Web Development & Research Intern (Remote)',
       'company':     'Insafdaar Organization',
-      'duration':    '2023',
+      'duration':    '07/2024 – 09/2024',
       'description': 'Built responsive web interfaces and conducted UX '
           'research for digital civic-engagement platforms, improving '
           'user retention.',

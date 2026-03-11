@@ -9,7 +9,7 @@ import '../sections/about_section.dart';
 import '../sections/tech_stack_section.dart';
 import '../sections/projects_section.dart';
 import '../sections/experience_section.dart';
-import '../sections/testimonials_section.dart';
+import '../sections/education_section.dart';
 import '../sections/cta_section.dart';
 import '../sections/footer_section.dart';
 
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen>
                 TechStackSection(),
                 ProjectsSection(),
                 ExperienceSection(),
-                TestimonialsSection(),
+                EducationSection(),
                 CtaSection(),
                 FooterSection(),
               ],

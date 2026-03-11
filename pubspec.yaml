@@ -66,6 +66,7 @@ flutter:
    - assets/dev.json
    - assets/me.png
    - assets/1.png
+   - assets/edu.png
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

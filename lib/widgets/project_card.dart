@@ -19,10 +19,21 @@ class ProjectCard extends StatefulWidget {
 class _ProjectCardState extends State<ProjectCard> {
   bool _hovered = false;
 
+  /// 🔗 Open LinkedIn Post
   Future<void> _openLinkedIn() async {
-    final url = Uri.parse(widget.project.linkedinUrl);
-    if (widget.project.linkedinUrl.isNotEmpty && await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+    final urlString = widget.project.linkedinUrl;
+
+    if (urlString.isEmpty) return;
+
+    final Uri url = Uri.parse(urlString);
+
+    try {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      debugPrint("Could not open LinkedIn URL: $e");
     }
   }
 
@@ -30,11 +41,11 @@ class _ProjectCardState extends State<ProjectCard> {
   Widget build(BuildContext context) {
     final p = widget.project;
     final accentStart = p.gradientColors.first;
-    final accentEnd   = p.gradientColors.last;
+    final accentEnd = p.gradientColors.last;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
-      onExit:  (_) => setState(() => _hovered = false),
+      onExit: (_) => setState(() => _hovered = false),
       cursor: SystemMouseCursors.click,
       child: AnimatedScale(
         scale: _hovered ? 1.03 : 1.0,
@@ -81,7 +92,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           end: Alignment.centerRight,
                         ),
                         borderRadius: const BorderRadius.only(
-                          topLeft:  Radius.circular(24),
+                          topLeft: Radius.circular(24),
                           topRight: Radius.circular(24),
                         ),
                       ),
@@ -217,8 +228,6 @@ class _ProjectCardState extends State<ProjectCard> {
                                   const Color(0xFF0077B5)
                                       .withOpacity(_hovered ? 1.0 : 0.75),
                                 ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
                               ),
                               borderRadius: BorderRadius.circular(100),
                               boxShadow: _hovered
@@ -241,7 +250,6 @@ class _ProjectCardState extends State<ProjectCard> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      // LinkedIn "in" badge
                                       Container(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5, vertical: 2),
@@ -261,7 +269,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        'Read Case Study  →',
+                                        'View Project →',
                                         style: GoogleFonts.kanit(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w600,
