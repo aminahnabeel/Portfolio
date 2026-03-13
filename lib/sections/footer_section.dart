@@ -114,7 +114,7 @@ class FooterSection extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final isWideEnough = constraints.maxWidth >= 1000;
@@ -129,7 +129,7 @@ class FooterSection extends StatelessWidget {
                       _InlinePoint(
                         icon: Icons.phone_android_rounded,
                         text:
-                            'Project focus: mobile app development and modern UI',
+                            'Project focus: Mobile app development and modern UI',
                         color: Color(0xFF8F7BFF),
                       ),
                       _InlinePoint(
@@ -152,7 +152,7 @@ class FooterSection extends StatelessWidget {
                           for (var i = 0; i < points.length; i++) ...[
                             Expanded(child: points[i]),
                             if (i != points.length - 1)
-                              const SizedBox(width: 36),
+                              const SizedBox(width: 44),
                           ],
                         ],
                       );
@@ -163,28 +163,63 @@ class FooterSection extends StatelessWidget {
                       child: Row(
                         children: [
                           for (var i = 0; i < points.length; i++) ...[
-                            SizedBox(width: 250, child: points[i]),
+                            SizedBox(width: 270, child: points[i]),
                             if (i != points.length - 1)
-                              const SizedBox(width: 26),
+                              const SizedBox(width: 34),
                           ],
                         ],
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 18),
-                Container(
-                  height: 1,
-                  color: Colors.white.withValues(alpha: 0.08),
+                const SizedBox(height: 35),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withValues(alpha: 0.0),
+                              Colors.white.withValues(alpha: 0.16),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 7,
+                      height: 7,
+                      margin: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.45),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withValues(alpha: 0.16),
+                              Colors.white.withValues(alpha: 0.0),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 18),
                 Text(
                   '© 2026 Aminah Nabeel  ·  All Rights Reserved',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.kanit(
-                    fontSize: 13,
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
-                    letterSpacing: 0.4,
+                    fontSize: 12.5,
+                    color: AppColors.textSecondary.withValues(alpha: 0.62),
+                    letterSpacing: 0.8,
                   ),
                 ),
               ],
@@ -214,20 +249,45 @@ class _InlinePoint extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: color, size: 18),
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(9),
+              ),
+              child: Icon(icon, color: color, size: 16),
+            ),
             const SizedBox(width: 8),
             Expanded(
-              child: Container(height: 2, color: color.withValues(alpha: 0.55)),
+              child: Container(
+                height: 2.2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(99),
+                  gradient: LinearGradient(
+                    colors: [
+                      color.withValues(alpha: 0.95),
+                      color.withValues(alpha: 0.45),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          text,
-          style: GoogleFonts.kanit(
-            fontSize: 13.5,
-            color: Colors.white.withValues(alpha: 0.92),
-            height: 1.4,
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 76,
+          child: Text(
+            text,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.kanit(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.white.withValues(alpha: 0.94),
+              height: 1.42,
+            ),
           ),
         ),
       ],

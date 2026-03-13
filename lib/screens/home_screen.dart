@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_data.dart';
 import '../sections/navbar_section.dart';
@@ -29,6 +30,13 @@ class _HomeScreenState extends State<HomeScreen>
   late final AnimationController _menuAnim;
   late final Animation<double> _menuFade;
 
+  final _homeKey = GlobalKey();
+  final _aboutKey = GlobalKey();
+  final _techStackKey = GlobalKey();
+  final _projectsKey = GlobalKey();
+  final _experienceKey = GlobalKey();
+  final _contactKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +63,49 @@ class _HomeScreenState extends State<HomeScreen>
     _menuAnim.reverse();
   }
 
+  Future<void> _scrollToNavLabel(String label) async {
+    final target = switch (label) {
+      'Home' => _homeKey,
+      'About' => _aboutKey,
+      'Tech Stack' => _techStackKey,
+      'Projects' => _projectsKey,
+      'Experience' => _experienceKey,
+      'Contact' => _contactKey,
+      _ => _homeKey,
+    };
+
+    final ctx = target.currentContext;
+    if (ctx == null) {
+      return;
+    }
+
+    await Scrollable.ensureVisible(
+      ctx,
+      duration: const Duration(milliseconds: 550),
+      curve: Curves.easeInOutCubic,
+      alignment: 0.05,
+    );
+  }
+
+  Future<void> _downloadCv() async {
+    final cvUri = Uri.parse('assets/Aminah%20Nabeel.pdf');
+    final launched = await launchUrl(
+      cvUri,
+      mode: LaunchMode.externalApplication,
+    );
+
+    if (!mounted || launched) {
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Unable to open CV right now.'),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,17 +118,23 @@ class _HomeScreenState extends State<HomeScreen>
           // ── 2. Scrollable page content ────────────────────────────────
           SingleChildScrollView(
             child: Column(
-              children: const [
+              children: [
                 SizedBox(height: 80), // Space reserved for floating navbar
-                HeroSection(),
-                AboutSection(),
-                TechStackSection(),
-                ProjectsSection(),
-                ExperienceSection(),
-                EducationSection(),
-                AwardsSection(),
-                CtaSection(),
-                FooterSection(),
+                KeyedSubtree(key: _homeKey, child: const HeroSection()),
+                KeyedSubtree(key: _aboutKey, child: const AboutSection()),
+                KeyedSubtree(
+                  key: _techStackKey,
+                  child: const TechStackSection(),
+                ),
+                KeyedSubtree(key: _projectsKey, child: const ProjectsSection()),
+                KeyedSubtree(
+                  key: _experienceKey,
+                  child: const ExperienceSection(),
+                ),
+                const EducationSection(),
+                const AwardsSection(),
+                KeyedSubtree(key: _contactKey, child: const CtaSection()),
+                const FooterSection(),
               ],
             ),
           ),
@@ -87,13 +144,30 @@ class _HomeScreenState extends State<HomeScreen>
             top: 0,
             left: 0,
             right: 0,
-            child: NavbarSection(onMenuTap: _toggleMenu),
+            child: NavbarSection(
+              onMenuTap: _toggleMenu,
+              onLogoTap: () => _scrollToNavLabel('Home'),
+              onNavTap: _scrollToNavLabel,
+              onDownloadCvTap: _downloadCv,
+            ),
           ),
 
           // ── 4. Mobile slide-down menu ─────────────────────────────────
           FadeTransition(
             opacity: _menuFade,
-            child: _menuOpen ? _MobileMenu(onClose: _closeMenu) : const SizedBox.shrink(),
+            child: _menuOpen
+                ? _MobileMenu(
+                    onClose: _closeMenu,
+                    onNavTap: (label) async {
+                      _closeMenu();
+                      await Future<void>.delayed(
+                        const Duration(milliseconds: 120),
+                      );
+                      await _scrollToNavLabel(label);
+                    },
+                    onDownloadCvTap: _downloadCv,
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -187,8 +261,14 @@ class _GlowCircle extends StatelessWidget {
 // ── Full-screen mobile menu overlay ──────────────────────────────────────────
 class _MobileMenu extends StatelessWidget {
   final VoidCallback onClose;
+  final ValueChanged<String> onNavTap;
+  final VoidCallback onDownloadCvTap;
 
-  const _MobileMenu({required this.onClose});
+  const _MobileMenu({
+    required this.onClose,
+    required this.onNavTap,
+    required this.onDownloadCvTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -208,10 +288,13 @@ class _MobileMenu extends StatelessWidget {
                 children: [
                   const SizedBox(height: 40),
                   ...AppData.navLinks.map(
-                    (link) => _MobileNavItem(label: link, onTap: onClose),
+                    (link) => _MobileNavItem(
+                      label: link,
+                      onTap: () => onNavTap(link),
+                    ),
                   ),
                   const SizedBox(height: 32),
-                  _MobileDownloadCv(),
+                  _MobileDownloadCv(onTap: onDownloadCvTap),
                 ],
               ),
             ),
@@ -249,6 +332,10 @@ class _MobileNavItem extends StatelessWidget {
 }
 
 class _MobileDownloadCv extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _MobileDownloadCv({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -263,7 +350,7 @@ class _MobileDownloadCv extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(100),
-            onTap: () {},
+            onTap: onTap,
             child: Center(
               child: Text(
                 'Download CV',

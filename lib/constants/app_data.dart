@@ -10,17 +10,17 @@ class AppData {
   static const List<String> navLinks = [
     'Home',
     'About',
-    'Services',
-    'Works',
-    'Testimonials',
+    'Tech Stack',
+    'Projects',
+    'Experience',
     'Contact',
   ];
 
   // ── Stats ────────────────────────────────────────────────────────────────────
   static const List<Map<String, String>> stats = [
-    {'number': '4',  'suffix': ' +', 'label': 'Projects',     'icon': 'rocket'},
-    {'number': '2',  'suffix': '',  'label': 'Internships',  'icon': 'work'},
-    {'number': '5',  'suffix': ' +', 'label': 'Certificates', 'icon': 'award'},
+    {'number': '4', 'suffix': ' +', 'label': 'Projects', 'icon': 'rocket'},
+    {'number': '2', 'suffix': '', 'label': 'Internships', 'icon': 'work'},
+    {'number': '5', 'suffix': ' +', 'label': 'Certificates', 'icon': 'award'},
   ];
 
   // ── Services ─────────────────────────────────────────────────────────────────
@@ -62,7 +62,8 @@ class AppData {
           'grow together — no money involved, just knowledge.',
       tags: ['Flutter', 'Firebase', 'AI / ML'],
       gradientColors: const [Color(0xFF9747FF), Color(0xFF6B35CF)],
-      linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7421854717712125953/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
+      linkedinUrl:
+          'https://www.linkedin.com/feed/update/urn:li:activity:7421854717712125953/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'Traffic Sign Recognition',
@@ -73,7 +74,8 @@ class AppData {
           'TensorFlow and optimized for edge deployment.',
       tags: ['Python', 'TensorFlow', 'CNN', 'Keras'],
       gradientColors: const [Color(0xFFFE814C), Color(0xFFFF5733)],
-      linkedinUrl: 'https://www.linkedin.com/posts/aminah-nabeel-249b36221_machinelearning-deeplearning-python-ugcPost-7351923521767321602-kV4Y?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
+      linkedinUrl:
+          'https://www.linkedin.com/posts/aminah-nabeel-249b36221_machinelearning-deeplearning-python-ugcPost-7351923521767321602-kV4Y?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'Docker Ecommerce',
@@ -84,7 +86,8 @@ class AppData {
           'product microservices communicating over REST.',
       tags: ['Docker', 'Node.js', 'HTML', 'CSS'],
       gradientColors: const [Color(0xFF4776E6), Color(0xFF8E54E9)],
-      linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7437172163872448512/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
+      linkedinUrl:
+          'https://www.linkedin.com/feed/update/urn:li:activity:7437172163872448512/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADff8NkBJYKXRXbY7dcSPfOR8m5VmihQg1I',
     ),
     ProjectModel(
       title: 'ConnecFriend',
@@ -102,19 +105,21 @@ class AppData {
   // ── Experience ───────────────────────────────────────────────────────────────
   static const List<Map<String, String>> experience = [
     {
-      'role':        'Mobile App Development Intern',
-      'company':     'Esols Technologies',
-      'duration':    '07/2025 – 08/2025',
+      'role': 'Mobile App Development Intern',
+      'company': 'Esols Technologies',
+      'duration': '07/2025 – 08/2025',
 
-      'description': 'Developed multiple Flutter applications with clean '
+      'description':
+          'Developed multiple Flutter applications with clean '
           'architecture, Firebase integration, and responsive UI design for '
           'real-world clients.',
     },
     {
-      'role':        'Web Development & Research Intern (Remote)',
-      'company':     'Insafdaar Organization',
-      'duration':    '07/2024 – 09/2024',
-      'description': 'Built responsive web interfaces and conducted UX '
+      'role': 'Web Development & Research Intern (Remote)',
+      'company': 'Insafdaar Organization',
+      'duration': '07/2024 – 09/2024',
+      'description':
+          'Built responsive web interfaces and conducted UX '
           'research for digital civic-engagement platforms, improving '
           'user retention.',
     },
@@ -127,7 +132,8 @@ class AppData {
       'issuer': 'Bahria University Islamabad',
       'year': '2023 - 2025',
       'type': 'Award',
-      'summary': 'Awarded for academic excellence, securing multiple merit scholarships.',
+      'summary':
+          'Awarded for academic excellence, securing multiple merit scholarships.',
       'icon': 'award',
     },
     {
@@ -159,24 +165,24 @@ class AppData {
   // ── Testimonials ─────────────────────────────────────────────────────────────
   static const List<Map<String, String>> testimonials = [
     {
-      'name':     'Jason Miller',
-      'role':     'Client Work',
+      'name': 'Jason Miller',
+      'role': 'Client Work',
       'initials': 'JM',
       'text':
           'Aminah delivered excellent UI and development work. The app exceeded '
           'our expectations in both design and functionality. Highly recommended!',
     },
     {
-      'name':     'Sarah Chen',
-      'role':     'Project Collaborator',
+      'name': 'Sarah Chen',
+      'role': 'Project Collaborator',
       'initials': 'SC',
       'text':
           'Working with Aminah was a fantastic experience. Her attention to '
           'detail and clean code really made a difference in our deliverables.',
     },
     {
-      'name':     'Ahmed Khan',
-      'role':     'Startup Founder',
+      'name': 'Ahmed Khan',
+      'role': 'Startup Founder',
       'initials': 'AK',
       'text':
           "Aminah's Flutter expertise and AI integration knowledge helped us "
@@ -185,8 +191,8 @@ class AppData {
   ];
 
   // ── Social links ─────────────────────────────────────────────────────────────
-  static const String linkedInUrl  = 'https://linkedin.com';
-  static const String githubUrl    = 'https://github.com';
+  static const String linkedInUrl = 'https://linkedin.com';
+  static const String githubUrl = 'https://github.com';
   static const String instagramUrl = 'https://instagram.com';
-  static const String behanceUrl   = 'https://behance.net';
+  static const String behanceUrl = 'https://behance.net';
 }

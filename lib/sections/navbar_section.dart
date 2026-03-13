@@ -10,8 +10,17 @@ import '../widgets/gradient_button.dart';
 /// triggers [onMenuTap].
 class NavbarSection extends StatefulWidget {
   final VoidCallback? onMenuTap;
+  final VoidCallback? onLogoTap;
+  final ValueChanged<String>? onNavTap;
+  final VoidCallback? onDownloadCvTap;
 
-  const NavbarSection({super.key, this.onMenuTap});
+  const NavbarSection({
+    super.key,
+    this.onMenuTap,
+    this.onLogoTap,
+    this.onNavTap,
+    this.onDownloadCvTap,
+  });
 
   @override
   State<NavbarSection> createState() => _NavbarSectionState();
@@ -42,20 +51,28 @@ class _NavbarSectionState extends State<NavbarSection> {
               const Spacer(),
               // ── Desktop nav links ─────────────────────────────────────────
               if (isDesktop) ...[
-                ...AppData.navLinks.map((link) => _NavLink(label: link)),
+                ...AppData.navLinks.map(
+                  (link) => _NavLink(
+                    label: link,
+                    onTap: () => widget.onNavTap?.call(link),
+                  ),
+                ),
                 const SizedBox(width: 28),
                 GradientButton(
                   text: 'Download CV',
                   height: 44,
                   fontSize: 14,
-                  onTap: () {},
+                  onTap: widget.onDownloadCvTap ?? () {},
                 ),
               ],
               // ── Mobile hamburger ──────────────────────────────────────────
               if (!isDesktop)
                 IconButton(
-                  icon: const Icon(Icons.menu_rounded,
-                      color: AppColors.textPrimary, size: 28),
+                  icon: const Icon(
+                    Icons.menu_rounded,
+                    color: AppColors.textPrimary,
+                    size: 28,
+                  ),
                   onPressed: widget.onMenuTap,
                 ),
             ],
@@ -66,38 +83,38 @@ class _NavbarSectionState extends State<NavbarSection> {
   }
 
   Widget _buildLogo() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Profile circle
-        Container(
-          width: 46,
-          height: 46,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.glassBorder, width: 1.5),
-          ),
-          child: ClipOval(
-            child: Image.asset(
-              'assets/me.png',
-              width: 30,
-              height: 30,
-              
+    return GestureDetector(
+      onTap: widget.onLogoTap,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Profile circle
+            Container(
+              width: 46,
+              height: 46,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                border: Border.all(color: AppColors.glassBorder, width: 1.5),
+              ),
+              child: ClipOval(
+                child: Image.asset('assets/me.png', width: 30, height: 30),
+              ),
             ),
-          ),
+            const SizedBox(width: 12),
+            Text(
+              'Aminah Nabeel',
+              style: GoogleFonts.kanit(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
         ),
-        
-        const SizedBox(width: 12),
-        Text(
-          'Aminah Nabeel',
-          style: GoogleFonts.kanit(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -105,7 +122,9 @@ class _NavbarSectionState extends State<NavbarSection> {
 // ── Individual nav link with hover tint ──────────────────────────────────────
 class _NavLink extends StatefulWidget {
   final String label;
-  const _NavLink({required this.label});
+  final VoidCallback onTap;
+
+  const _NavLink({required this.label, required this.onTap});
 
   @override
   State<_NavLink> createState() => __NavLinkState();
@@ -119,9 +138,9 @@ class __NavLinkState extends State<_NavLink> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
-      onExit:  (_) => setState(() => _hovered = false),
+      onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
-        onTap: () {},
+        onTap: widget.onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: AnimatedDefaultTextStyle(
