@@ -1,115 +1,193 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../constants/app_colors.dart';
-import '../constants/app_data.dart';
+import 'package:lottie/lottie.dart';
 
-/// Site footer with logo, tagline, social icons and copyright.
+import '../constants/app_colors.dart';
+
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
-    final isDesktop = w >= 1024;
+    final width = MediaQuery.of(context).size.width;
+    final isDesktop = width >= 1024;
+    final horizontalPadding = isDesktop ? 80.0 : 24.0;
 
-    return Container(
-      color: AppColors.footerBg,
-      padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 80 : 24,
-        vertical: 60,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        14,
+        horizontalPadding,
+        40,
       ),
       child: Column(
         children: [
-          // Divider line
           Container(
             height: 1,
-            decoration: const BoxDecoration(
-              gradient: AppColors.horizontalGradient,
-            ),
-          ),
-          const SizedBox(height: 48),
-
-          // Logo
-          Container(
-            width: 60,
-            height: 60,
             decoration: BoxDecoration(
-              gradient: AppColors.accentGradient,
-              borderRadius: BorderRadius.circular(27),
-            ),
-            child: Center(
-              child: Text(
-                'AN',
-                style: GoogleFonts.kanit(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.white.withValues(alpha: 0.0),
+                  AppColors.purple.withValues(alpha: 0.8),
+                  AppColors.orange.withValues(alpha: 0.8),
+                  Colors.white.withValues(alpha: 0.0),
+                ],
               ),
             ),
           ),
           const SizedBox(height: 20),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1160),
+            child: Column(
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final useRow = constraints.maxWidth >= 900;
 
-          // Tagline
-          Text(
-            'Wanna see more behind the scenes?\nCheck out my socials below!',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.kanit(
-              fontSize: 15,
-              color: AppColors.textSecondary,
-              height: 1.7,
-            ),
-          ),
-          const SizedBox(height: 32),
+                    final leftPanel = SizedBox(
+                      width: useRow ? 300 : 240,
+                      height: useRow ? 300 : 240,
+                      child: Center(
+                        child: Lottie.asset(
+                          'assets/contact.json',
+                          width: useRow ? 250 : 200,
+                          height: useRow ? 250 : 200,
+                          fit: BoxFit.contain,
+                          repeat: true,
+                          animate: true,
+                        ),
+                      ),
+                    );
 
-          // Social icons row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _SocialIcon(
-                label: 'in',
-                tooltip: 'LinkedIn',
-                url: AppData.linkedInUrl,
-              ),
-              const SizedBox(width: 16),
-              _SocialIcon(
-                label: 'GH',
-                tooltip: 'GitHub',
-                url: AppData.githubUrl,
-                icon: Icons.code_rounded,
-              ),
-              const SizedBox(width: 16),
-              _SocialIcon(
-                label: 'IG',
-                tooltip: 'Instagram',
-                url: AppData.instagramUrl,
-                icon: Icons.camera_alt_rounded,
-              ),
-              const SizedBox(width: 16),
-              _SocialIcon(
-                label: 'Be',
-                tooltip: 'Behance',
-                url: AppData.behanceUrl,
-              ),
-            ],
-          ),
-          const SizedBox(height: 40),
+                    final rightPanel = Expanded(
+                      child: Column(
+                        crossAxisAlignment: useRow
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Thank You for Viewing My Portfolio',
+                            textAlign: useRow
+                                ? TextAlign.left
+                                : TextAlign.center,
+                            style: GoogleFonts.kanit(
+                              fontSize: useRow ? 34 : 28,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              height: 1.08,
+                              letterSpacing: -0.4,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'I truly appreciate your time and support. I am excited to keep learning, collaborating, and building products that create real impact.',
+                            textAlign: useRow
+                                ? TextAlign.left
+                                : TextAlign.center,
+                            style: GoogleFonts.kanit(
+                              fontSize: 15,
+                              color: AppColors.textSecondary,
+                              height: 1.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
 
-          // Divider
-          Container(
-            height: 1,
-            color: AppColors.glassBorder,
-          ),
-          const SizedBox(height: 24),
+                    if (useRow) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          leftPanel,
+                          const SizedBox(width: 30),
+                          rightPanel,
+                        ],
+                      );
+                    }
 
-          // Copyright
-          Text(
-            '© 2026 Aminah Nabeel  ·  All Rights Reserved',
-            style: GoogleFonts.kanit(
-              fontSize: 13,
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
-              letterSpacing: 0.5,
+                    return Column(
+                      children: [
+                        Center(child: leftPanel),
+                        const SizedBox(height: 16),
+                        rightPanel,
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isWideEnough = constraints.maxWidth >= 1000;
+
+                    const points = [
+                      _InlinePoint(
+                        icon: Icons.work_outline_rounded,
+                        text:
+                            'Available for internships and collaborative projects',
+                        color: Color(0xFFFF8B62),
+                      ),
+                      _InlinePoint(
+                        icon: Icons.phone_android_rounded,
+                        text:
+                            'Project focus: mobile app development and modern UI',
+                        color: Color(0xFF8F7BFF),
+                      ),
+                      _InlinePoint(
+                        icon: Icons.auto_awesome_rounded,
+                        text:
+                            'Passionate about learning and building impactful solutions',
+                        color: Color(0xFF4FD6C3),
+                      ),
+                      _InlinePoint(
+                        icon: Icons.schedule_rounded,
+                        text: 'Response window: within 24 hours',
+                        color: Color(0xFFFFB84D),
+                      ),
+                    ];
+
+                    if (isWideEnough) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var i = 0; i < points.length; i++) ...[
+                            Expanded(child: points[i]),
+                            if (i != points.length - 1)
+                              const SizedBox(width: 36),
+                          ],
+                        ],
+                      );
+                    }
+
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (var i = 0; i < points.length; i++) ...[
+                            SizedBox(width: 250, child: points[i]),
+                            if (i != points.length - 1)
+                              const SizedBox(width: 26),
+                          ],
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 18),
+                Container(
+                  height: 1,
+                  color: Colors.white.withValues(alpha: 0.08),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  '© 2026 Aminah Nabeel  ·  All Rights Reserved',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.kanit(
+                    fontSize: 13,
+                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                    letterSpacing: 0.4,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -118,71 +196,41 @@ class FooterSection extends StatelessWidget {
   }
 }
 
-// ── Individual social icon button ─────────────────────────────────────────────
-class _SocialIcon extends StatefulWidget {
-  final String label;
-  final String tooltip;
-  final String url;
-  final IconData? icon;
+class _InlinePoint extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final Color color;
 
-  const _SocialIcon({
-    required this.label,
-    required this.tooltip,
-    required this.url,
-    this.icon,
+  const _InlinePoint({
+    required this.icon,
+    required this.text,
+    required this.color,
   });
 
   @override
-  State<_SocialIcon> createState() => __SocialIconState();
-}
-
-class __SocialIconState extends State<_SocialIcon> {
-  bool _hovered = false;
-
-  Future<void> _launch() async {
-    final uri = Uri.parse(widget.url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: widget.tooltip,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit:  (_) => setState(() => _hovered = false),
-        child: GestureDetector(
-          onTap: _launch,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(27),
-              gradient: _hovered ? AppColors.accentGradient : null,
-              border: _hovered
-                  ? null
-                  : Border.all(color: AppColors.glassBorder),
-              color: _hovered ? null : AppColors.glassBg,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: color, size: 18),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Container(height: 2, color: color.withValues(alpha: 0.55)),
             ),
-            child: Center(
-              child: widget.icon != null
-                  ? Icon(widget.icon, color: Colors.white, size: 20)
-                  : Text(
-                      widget.label,
-                      style: GoogleFonts.kanit(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          text,
+          style: GoogleFonts.kanit(
+            fontSize: 13.5,
+            color: Colors.white.withValues(alpha: 0.92),
+            height: 1.4,
           ),
         ),
-      ),
+      ],
     );
   }
 }
